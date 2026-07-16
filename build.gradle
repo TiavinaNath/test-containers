@@ -38,6 +38,17 @@ configurations {
 
 
 
+tasks.withType(JavaCompile).configureEach {
+    options.fork = true
+    options.forkOptions.jvmArgs += ["-Xss2m"]
+}
+tasks.withType(Test).configureEach {
+    jvmArgs += ["-Xss2m"]
+}
+bootRun {
+    jvmArgs += ["-Xss2m"]
+}
+
 
 test {
     maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
