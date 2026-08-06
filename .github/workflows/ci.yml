@@ -44,6 +44,12 @@ jobs:
               (github.ref == 'refs/heads/prod') && secrets.PROD_ZAVATRA ||
               (github.ref == 'refs/heads/preprod') && secrets.PREPROD_ZAVATRA
               }}
+      MACHIN: ${{
+              (github.event_name == 'pull_request' && github.base_ref == 'prod') && secrets.PROD_MACHIN ||
+              (github.event_name == 'pull_request' && github.base_ref == 'preprod') && secrets.PREPROD_MACHIN ||
+              (github.ref == 'refs/heads/prod') && secrets.PROD_MACHIN ||
+              (github.ref == 'refs/heads/preprod') && secrets.PREPROD_MACHIN
+              }}
 
 
     steps:
@@ -60,7 +66,8 @@ jobs:
             -Dspring.datasource.url="$SPRING_DATASOURCE_URL" \
             -Dspring.datasource.username="$SPRING_DATASOURCE_USERNAME" \
             -Dspring.datasource.password="$SPRING_DATASOURCE_PASSWORD" \
-            -Dzavatra="$ZAVATRA"
+            -Dzavatra="$ZAVATRA" \
+            -Dmachin="$MACHIN"
 
       
 
